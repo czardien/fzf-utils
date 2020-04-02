@@ -1,3 +1,4 @@
+#!/bin/bash
 function fzfalias() {
   local cmd height
   height=20
