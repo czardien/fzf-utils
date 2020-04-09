@@ -1,4 +1,17 @@
 #!/bin/bash
+function fcd() {
+  cd $(l |
+          fzf --ansi --preview "echo -e \"{}\" |
+          rev |
+          cut -f1 -d\" \" |
+          rev |
+          sed \"s/'//g\" |
+          xargs ls -1 --color=always" |
+          rev |
+          cut -f1 -d" " |
+          rev) 2> /dev/null
+}
+
 function fzfalias() {
   local cmd height
   height=20
