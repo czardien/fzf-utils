@@ -12,6 +12,10 @@ function fcd() {
           rev) 2> /dev/null
 }
 
+function fdlogs() {
+  docker ps -a | fzf --preview "echo -e {} | cut -f1 -d\" \" | xargs docker logs" | cut -f1 -d" " | xargs docker logs
+}
+
 function fzfalias() {
   local cmd height
   height=20
@@ -34,7 +38,7 @@ function __fzfcmd() {
 
 __fzf_select_dir__() {
   local dirs len max height
-  dirs="$(fd -t d)"
+  dirs="$(fd -t d -H)"
   len=$(echo -e "$dirs" | wc -l)
   max=$(( 4 * $COLUMNS / 10 ))
   # I wish this was working :'(
