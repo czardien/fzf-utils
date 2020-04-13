@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# Useful alias for specific utils
+alias fzffull="FZF_DEFAULT_OPTS=\"$FZF_DEFAULT_OPTS --height=100%\" fzf"
+
+function fgit() {
+  # bak: dir=$(fd -t d -H -d 1 | xargs -I {} bash -c "[[ -d {}/.git ]] 2> /dev/null && echo {}" | fzffull --preview "cd {}; git status --porcelain")
+  gitdirs="$(fd -t d -H -d 1 | \
+	  xargs -I {} bash -c "[[ -d {}/.git ]] 2> /dev/null && echo {}")"
+  # TODO: ImplementMe
+}
+
 function fcd() {
   cd $(l |
           fzf --ansi --preview "echo -e \"{}\" |
@@ -13,7 +24,7 @@ function fcd() {
 }
 
 function fdlogs() {
-  docker ps -a | fzf --preview "echo -e {} | cut -f1 -d\" \" | xargs docker logs" | cut -f1 -d" " | xargs docker logs
+  docker ps -a | fzffull --preview "echo -e {} | cut -f1 -d\" \" | xargs docker logs" | cut -f1 -d" " | xargs docker logs
 }
 
 function fzfalias() {
