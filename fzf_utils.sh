@@ -27,6 +27,11 @@ function fdlogs() {
   docker ps -a | fzffull --preview "echo -e {} | cut -f1 -d\" \" | xargs docker logs" | cut -f1 -d" " | xargs docker logs
 }
 
+function factivate() {
+  [[ -z $PYVENVS ]] && (echo "fatal: set PYVENVS environment variable to point at your virtual environments directory."; exit 1)
+  source $(ls -d $PYVENVS/* | sed 's:/*$::' | fzf | awk '{printf "%s/bin/activate", $1}')
+}
+
 function fzfalias() {
   local cmd height
   height=20
